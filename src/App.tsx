@@ -12,15 +12,20 @@ import LocationDetail from "./pages/LocationDetail.tsx";
 import PricingPage from "./pages/PricingPage.tsx";
 import { BookStep1, BookStep2, BookStep3 } from "./pages/BookingPages.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import { PageLoader } from "@/components/ui/PageLoader";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import "lenis/dist/lenis.css";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+      <SmoothScroll>
+        <PageLoader />
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
         <Routes>
           <Route element={<MarketingLayout />}>
             <Route path="/" element={<Index />} />
@@ -42,6 +47,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      </SmoothScroll>
     </TooltipProvider>
   </QueryClientProvider>
 );

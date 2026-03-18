@@ -1,6 +1,6 @@
 import React from 'react';
 import { Microscope, Calendar, Scissors, TrendingUp, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const steps = [
   { icon: Microscope, title: 'Free AI Scalp Scan', description: 'Upload a photo. Know your hair loss stage and best treatment path in 60 seconds.' },
@@ -10,22 +10,22 @@ const steps = [
 ];
 
 /** Four-step process explanation section */
-export const HowItWorks: React.FC = () => (
-  <section className="section-padding bg-evoke-bgLight">
-    <div className="container mx-auto px-4">
-      <h2 className="display-heading text-evoke-navy text-center mb-12">
-        From Concern to Confidence — in 4 Steps.
-      </h2>
+export const HowItWorks: React.FC = () => {
+  const revealRef = useScrollReveal();
+  
+  return (
+    <section className="section-padding bg-evoke-bgLight">
+      <div className="container mx-auto px-4">
+        <h2 className="display-heading text-evoke-navy text-center mb-12">
+          From Concern to Confidence — in 4 Steps.
+        </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        {steps.map((step, i) => (
-          <motion.div
+        <div ref={revealRef as any} className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {steps.map((step, i) => (
+          <div
             key={step.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.15, duration: 0.5 }}
-            className="relative text-center"
+            className="reveal-item relative text-center"
+            data-reveal="lift"
           >
             <span className="font-display text-6xl font-bold text-evoke-teal/20 block mb-2">{i + 1}</span>
             <step.icon className="h-12 w-12 mx-auto text-evoke-teal mb-4" />
@@ -34,9 +34,10 @@ export const HowItWorks: React.FC = () => (
             {i < steps.length - 1 && (
               <ArrowRight className="hidden md:block absolute top-16 -right-4 h-6 w-6 text-evoke-gold" />
             )}
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
   </section>
-);
+  );
+};

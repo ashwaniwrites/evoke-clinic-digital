@@ -3,6 +3,7 @@ import { EvokeBadge } from '@/components/ui/EvokeBadge';
 import { EvokeButton } from '@/components/ui/EvokeButton';
 import { Link } from 'react-router-dom';
 import type { Testimonial } from '@/types/booking';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface SliderProps {
   beforeUrl: string;
@@ -70,6 +71,7 @@ interface GalleryProps {
 export const GalleryPreview: React.FC<GalleryProps> = ({ testimonials }) => {
   const [filter, setFilter] = useState('All');
   const filters = ['All', 'Hair Transplant', 'Non-Surgical', 'Skin'];
+  const revealRef = useScrollReveal();
 
   const filtered = filter === 'All'
     ? testimonials
@@ -77,13 +79,15 @@ export const GalleryPreview: React.FC<GalleryProps> = ({ testimonials }) => {
 
   return (
     <section className="section-padding bg-evoke-bgLight">
-      <div className="container mx-auto px-4">
-        <h2 className="display-heading text-evoke-navy text-center mb-3">See What's Possible.</h2>
-        <p className="text-center text-evoke-textMuted mb-8">
+      <div ref={revealRef as any} className="container mx-auto px-4">
+        <div className="reveal-item" data-reveal="blur">
+          <h2 className="display-heading text-evoke-navy text-center mb-3">See What's Possible.</h2>
+        </div>
+        <p className="text-center text-evoke-textMuted mb-8 reveal-item" data-reveal="fade">
           100+ documented patient journeys. Before and after — no filters, no tricks.
         </p>
 
-        <div className="flex gap-2 justify-center mb-8 flex-wrap">
+        <div className="flex gap-2 justify-center mb-8 flex-wrap reveal-item">
           {filters.map(f => (
             <button
               key={f}
@@ -101,7 +105,7 @@ export const GalleryPreview: React.FC<GalleryProps> = ({ testimonials }) => {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {filtered.slice(0, 6).map((t) => (
-            <div key={t.id}>
+            <div key={t.id} className="reveal-item" data-reveal="zoom">
               <BeforeAfterSlider
                 beforeUrl={t.beforeImageUrl}
                 afterUrl={t.afterImageUrl}
@@ -115,7 +119,7 @@ export const GalleryPreview: React.FC<GalleryProps> = ({ testimonials }) => {
           ))}
         </div>
 
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 reveal-item" data-reveal="lift">
           <Link to="/results">
             <EvokeButton variant="secondary">View All 100+ Results →</EvokeButton>
           </Link>

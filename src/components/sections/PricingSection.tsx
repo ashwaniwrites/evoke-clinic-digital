@@ -5,6 +5,7 @@ import { EvokeButton } from '@/components/ui/EvokeButton';
 import { EvokeCard } from '@/components/ui/EvokeCard';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '@/lib/utils';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface PricingTier {
   name: string;
@@ -32,19 +33,24 @@ const tiers: PricingTier[] = [
 ];
 
 /** Transparent pricing section with tiered cards */
-export const PricingSection: React.FC = () => (
-  <section className="section-padding bg-evoke-navy">
-    <div className="container mx-auto px-4">
-      <h2 className="display-heading text-white text-center mb-3">
-        No Surprises. Ever. Transparent Pricing.
-      </h2>
-      <p className="text-center text-white/70 mb-12">
-        Clear costs before you commit. EMI available on all procedures.
-      </p>
+export const PricingSection: React.FC = () => {
+  const revealRef = useScrollReveal();
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        {tiers.map((tier) => (
-          <div key={tier.name} className={`relative rounded-card p-6 ${tier.isRecommended ? 'bg-white ring-2 ring-evoke-gold' : 'bg-white/10 border border-white/20'}`}>
+  return (
+    <section className="section-padding bg-evoke-navy">
+      <div ref={revealRef as any} className="container mx-auto px-4">
+        <div className="reveal-item" data-reveal="blur">
+          <h2 className="display-heading text-white text-center mb-3">
+            No Surprises. Ever. Transparent Pricing.
+          </h2>
+        </div>
+        <p className="text-center text-white/70 mb-12 reveal-item" data-reveal="fade">
+          Clear costs before you commit. EMI available on all procedures.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {tiers.map((tier) => (
+            <div key={tier.name} className={`relative rounded-card p-6 reveal-item ${tier.isRecommended ? 'bg-white ring-2 ring-evoke-gold' : 'bg-white/10 border border-white/20'}`} data-reveal="lift">
             {tier.isRecommended && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <EvokeBadge variant="gold">Most Popular</EvokeBadge>
@@ -67,14 +73,16 @@ export const PricingSection: React.FC = () => (
         ))}
       </div>
 
-      <p className="text-center text-white/60 text-sm mt-8">
-        Or pay from just ₹2,999/month — 0% EMI with HDFC/ICICI
-      </p>
-      <div className="text-center mt-6">
-        <Link to="/pricing">
-          <EvokeButton variant="ghost" size="lg">Get My Exact Quote →</EvokeButton>
-        </Link>
+        <p className="text-center text-white/60 text-sm mt-8 reveal-item" data-reveal="fade">
+          Or pay from just ₹2,999/month — 0% EMI with HDFC/ICICI
+        </p>
+        <div className="text-center mt-6 reveal-item" data-reveal="lift">
+          <Link to="/pricing">
+            <EvokeButton variant="ghost" size="lg">Get My Exact Quote →</EvokeButton>
+          </Link>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
+

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { EvokeButton } from '@/components/ui/EvokeButton';
 import type { ClinicLocation } from '@/types/location';
 import { cn } from '@/lib/utils';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface Props {
   locations: ClinicLocation[];
@@ -12,17 +13,20 @@ interface Props {
 /** Locations map and list section */
 export const LocationsMap: React.FC<Props> = ({ locations }) => {
   const [activeId, setActiveId] = useState<string>(locations[0]?.id || '');
+  const revealRef = useScrollReveal();
 
   return (
     <section className="section-padding bg-white">
-      <div className="container mx-auto px-4">
-        <h2 className="display-heading text-evoke-navy text-center mb-12">
-          7 Clinics Across Delhi NCR. One Near You.
-        </h2>
+      <div ref={revealRef as any} className="container mx-auto px-4">
+        <div className="reveal-item" data-reveal="blur">
+          <h2 className="display-heading text-evoke-navy text-center mb-12">
+            7 Clinics Across Delhi NCR. One Near You.
+          </h2>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Map placeholder */}
-          <div className="lg:col-span-3 bg-evoke-bgLight rounded-card min-h-[400px] flex items-center justify-center">
+          <div className="lg:col-span-3 bg-evoke-bgLight rounded-card min-h-[400px] flex items-center justify-center reveal-item" data-reveal="fade">
             <div className="text-center text-evoke-textMuted">
               <MapPin className="h-12 w-12 mx-auto mb-3 text-evoke-teal" />
               <p className="font-semibold">Google Maps</p>
@@ -31,7 +35,7 @@ export const LocationsMap: React.FC<Props> = ({ locations }) => {
           </div>
 
           {/* Location list */}
-          <div className="lg:col-span-2 max-h-[500px] overflow-y-auto space-y-2 pr-2">
+          <div className="lg:col-span-2 max-h-[500px] overflow-y-auto space-y-2 pr-2 reveal-item" data-reveal="lift">
             {locations.map((loc) => (
               <button
                 key={loc.id}

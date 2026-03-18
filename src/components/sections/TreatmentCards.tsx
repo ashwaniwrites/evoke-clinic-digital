@@ -5,6 +5,7 @@ import { EvokeCard } from '@/components/ui/EvokeCard';
 import { EvokeBadge } from '@/components/ui/EvokeBadge';
 import { formatPrice } from '@/lib/utils';
 import type { Treatment } from '@/types/treatment';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const categoryIcons = {
   transplant: Scissors,
@@ -19,6 +20,8 @@ interface Props {
 
 /** Treatment category cards grid */
 export const TreatmentCards: React.FC<Props> = ({ treatments }) => {
+  const revealRef = useScrollReveal();
+
   const featured = treatments.reduce((acc, t) => {
     if (!acc.find(a => a.category === t.category)) acc.push(t);
     return acc;
@@ -30,11 +33,11 @@ export const TreatmentCards: React.FC<Props> = ({ treatments }) => {
         <h2 className="display-heading text-evoke-navy text-center mb-12">
           Every Hair & Skin Concern, Solved.
         </h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div ref={revealRef as any} className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {featured.map((t) => {
             const Icon = categoryIcons[t.category];
             return (
-              <Link key={t.id} to={`/treatments/${t.slug}`}>
+              <Link key={t.id} to={`/treatments/${t.slug}`} className="reveal-item" data-reveal="lift">
                 <EvokeCard hover className="p-6 h-full text-center">
                   <div className="relative">
                     {t.id === 'fue' && (
