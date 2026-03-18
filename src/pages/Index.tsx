@@ -1,16 +1,30 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from 'react';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { TrustBar } from '@/components/sections/TrustBar';
+import { TreatmentCards } from '@/components/sections/TreatmentCards';
+import { SocialProof } from '@/components/sections/SocialProof';
+import { GalleryPreview } from '@/components/sections/GalleryPreview';
+import { DoctorSpotlight } from '@/components/sections/DoctorSpotlight';
+import { PricingSection } from '@/components/sections/PricingSection';
+import { HowItWorks } from '@/components/sections/HowItWorks';
+import { LocationsMap } from '@/components/sections/LocationsMap';
+import { BlogPreview } from '@/components/sections/BlogPreview';
+import { treatments, testimonials, doctors, locations, blogArticles } from '@/lib/data/seed';
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
-  return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
-    </div>
-  );
-};
-
-const Index = PlaceholderIndex;
+/** Evoke Hair & Skin Clinic — Homepage */
+const Index: React.FC = () => (
+  <>
+    <HeroSection />
+    <TrustBar />
+    <TreatmentCards treatments={treatments} />
+    <SocialProof testimonials={testimonials} />
+    <GalleryPreview testimonials={testimonials} />
+    <DoctorSpotlight doctors={doctors} />
+    <PricingSection />
+    <HowItWorks />
+    <LocationsMap locations={locations} />
+    <BlogPreview articles={blogArticles} />
+  </>
+);
 
 export default Index;
