@@ -73,13 +73,26 @@ export const FloatingChatbot: React.FC = () => {
 
       {/* Floating Trigger Button */}
       <motion.button
-        whileHover={{ scale: 1.05 }}
+        animate={{ y: [0, -20, 0] }}
+        transition={{ 
+          y: {
+            repeat: Infinity, 
+            duration: 2.5, 
+            ease: "easeInOut" 
+          }
+        }}
+        whileHover={{ scale: 1.05, cursor: 'pointer' }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
         className="w-14 h-14 bg-evoke-navy text-white rounded-full flex items-center justify-center shadow-[0_10px_25px_-5px_rgba(26,58,92,0.5)] border border-white/10 relative group"
         aria-label="Toggle Contact Menu"
       >
-        <div className="absolute inset-0 bg-evoke-gold rounded-full blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
+        {/* Continuous Pulsing Ambient Glow */}
+        <motion.div 
+          animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.7, 0.3] }}
+          transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+          className="absolute inset-0 bg-evoke-gold rounded-full blur-xl pointer-events-none" 
+        />
         {isOpen ? (
           <X className="w-6 h-6 relative z-10" />
         ) : (

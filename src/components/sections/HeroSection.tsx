@@ -5,6 +5,9 @@ import { EvokeBadge } from '@/components/ui/EvokeBadge';
 import { Link } from 'react-router-dom';
 import { motion, useAnimation } from 'framer-motion';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
+import { Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { MeshDNA } from '@/components/3d/MeshDNA';
 
 /** Advanced Cinematic Hero section with animated gradients, glassmorphism, and kinetic typography in brand colors */
 export const HeroSection: React.FC = () => {
@@ -55,33 +58,49 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-evoke-navy">
-      {/* 1. Abstract Animated Mesh Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Dynamic Orbs that drift and react slightly to mouse */}
+      {/* 1. Cinematic 3D Biology Abstract Background */}
+      <div className="absolute inset-0 overflow-hidden bg-[#07131b]">
+        {/* Soft Fluid Bioluminescence with Cursor Parallax */}
         <motion.div 
-          className="absolute -top-[20%] -right-[10%] w-[60%] h-[60%] rounded-full opacity-30 mix-blend-screen filter blur-[100px]"
-          style={{ background: 'radial-gradient(circle, #C9A84C 0%, transparent 70%)' }}
+          className="absolute -top-[20%] -right-[10%] w-[80vw] h-[80vw] rounded-full opacity-50 md:opacity-70 mix-blend-screen filter blur-[100px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle, #C9A84C 0%, transparent 60%)' }}
           animate={{ 
-            x: [0, 30, -20, 0], 
-            y: [0, -40, 20, 0],
-            translateX: mousePos.x * -1.5,
-            translateY: mousePos.y * -1.5
+            x: [0, 40, -30, 0], 
+            y: [0, -50, 30, 0],
+            translateX: mousePos.x * -2,
+            translateY: mousePos.y * -2
           }}
           transition={{ duration: 15, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
         />
         <motion.div 
-          className="absolute top-[40%] -left-[10%] w-[50%] h-[50%] rounded-full opacity-20 mix-blend-screen filter blur-[120px]"
-          style={{ background: 'radial-gradient(circle, #0F6A6E 0%, transparent 70%)' }}
+          className="absolute top-[30%] -left-[20%] w-[70vw] h-[70vw] rounded-full opacity-50 md:opacity-60 mix-blend-screen filter blur-[120px] pointer-events-none"
+          style={{ background: 'radial-gradient(circle, #0F6A6E 0%, transparent 60%)' }}
           animate={{ 
-            x: [0, -40, 30, 0], 
-            y: [0, 50, -30, 0],
-            translateX: mousePos.x * 1.5,
-            translateY: mousePos.y * 1.5
+            x: [0, -50, 40, 0], 
+            y: [0, 60, -40, 0],
+            translateX: mousePos.x * 2,
+            translateY: mousePos.y * 2
           }}
           transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
         />
-        {/* Deep dark grain texture overlay */}
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay"></div>
+
+        {/* Authentic 3D DNA Model via WebGL */}
+        <div className="absolute inset-0 lg:left-1/4 flex items-center justify-center pointer-events-none mix-blend-screen overflow-visible">
+          <Canvas camera={{ position: [0, 0, 10], fov: 45 }} className="w-full h-full pointer-events-none">
+            {/* Cinematic Lighting for the DNA Model */}
+            <ambientLight intensity={0.4} />
+            <directionalLight position={[10, 10, 5]} intensity={1.5} color="#0F6A6E" />
+            <directionalLight position={[-10, -5, 5]} intensity={1} color="#C9A84C" />
+            <pointLight position={[0, -5, 0]} intensity={2} color="#ffffff" distance={20} />
+            
+            <Suspense fallback={null}>
+              <MeshDNA />
+            </Suspense>
+          </Canvas>
+        </div>
+
+        {/* Deep dark grain texture overlay for cellular realism */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] mix-blend-overlay pointer-events-none z-0" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-24 md:py-0">
