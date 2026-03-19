@@ -14,6 +14,7 @@ import { BookStep1, BookStep2, BookStep3 } from "./pages/BookingPages.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { PageLoader } from "@/components/ui/PageLoader";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { FloatingChatbot } from "@/components/ui/FloatingChatbot";
 import "lenis/dist/lenis.css";
 
 const queryClient = new QueryClient();
@@ -26,7 +27,8 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-        <Routes>
+          <FloatingChatbot />
+          <Routes>
           <Route element={<MarketingLayout />}>
             <Route path="/" element={<Index />} />
             <Route path="/treatments" element={<TreatmentsPage />} />

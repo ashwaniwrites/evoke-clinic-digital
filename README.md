@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Evoke Clinic Digital Platform
 
-TODO: Document your project here
+Welcome to the Evoke Clinic frontend repository.TODO: Document your project here
